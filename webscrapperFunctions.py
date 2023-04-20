@@ -18,11 +18,39 @@ def isResponseValid(response):
         print("There was a problem: %s" % (exc))
         return False
     
-def checkLink(houseLink):
-    response = requests.get(houseLink,headers=header)
+def checkLink(link):
+    response = requests.get(link,headers=header)
     return response
+
+def checkHouse(htmlHouse):
+    # Obtain the data from all the houses
+    # TODO: Recámaras
+    # TODO: Estacionamientos
+    # TODO: Baños
+    # TODO: Construidos (m2)
+    # TODO: Terreno (m2)
+    # TODO: Amueblado (yes,no)
+    # TODO: Precio
+    # TODO: Short description
+    # TODO: Condiciones de precio
+    # TODO: Calificación del vecindario
+    # TODO: Amenidades
+
+# For every data, obtain the text and remove the surrounding whitespace
+    title = htmlHouse.find('h2',{'class':'ListingCell-KeyInfo-title'}).text.strip()
+    address = htmlHouse.find('span', {'class':'ListingCell-KeyInfo-address-text'}).text.strip()
+    link = htmlHouse.find('a',{'class':'js-listing-link'})['href']
+    
+    print('='*40)
+    print(title)
+    print(address)
+    print(link)
+    return {'title':title,'address':address}
+    
     
 def checkMyIP():
+    """Shows the current IP
+    """    
     ip = requests.get('https://api.ipify.org').content.decode('utf8')
     print('My public IP address is: {}'.format(ip)) 
        
