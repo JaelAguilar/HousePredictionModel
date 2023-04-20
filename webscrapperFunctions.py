@@ -20,6 +20,14 @@ def isResponseValid(response):
         return False
     
 def checkLink(link):
+    """Obtains the request of the link
+
+    Args:
+        link (string): URL
+
+    Returns:
+        _type_: _description_
+    """    
     response = requests.get(link,headers=header)
     return response
 
@@ -48,6 +56,14 @@ def checkHouse(htmlHouse):
     return {'title':title,'address':address}
     
 def checkHouseLink(link):
+    """Obtains the data of the individual page of a house
+
+    Args:
+        link (string): The link of the house
+
+    Returns:
+        dict: Dictionary with the data of every house
+    """    
     response = requests.get(link,headers=header)
     results = {}
     if isResponseValid(response):
@@ -58,6 +74,14 @@ def checkHouseLink(link):
     return results
     
 def checkHouseDetails(detailSoup):
+    """Obtains the data of the Details section in the webpage
+
+    Args:
+        detailSoup (HTMLParse): The html of the Details section of the webpage
+
+    Returns:
+        dict: Dictionary with details and its values
+    """    
     details={}
     detailsNames = detailSoup.find_all('div',{'class':'ellipsis'})
     detailsValues = detailSoup.find_all('div',{'class':'last'})
@@ -67,6 +91,7 @@ def checkHouseDetails(detailSoup):
         details[name]=value
         print(name+": "+value)
     print(details)
+    return details
         
     
 def checkMyIP():
