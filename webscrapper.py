@@ -1,4 +1,4 @@
-import requests,bs4
+import bs4
 
 from webscrapperFunctions import checkHouse, checkLink, checkMyIP, isResponseValid
 

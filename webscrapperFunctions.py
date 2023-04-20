@@ -23,6 +23,11 @@ def checkLink(link):
     return response
 
 def checkHouse(htmlHouse):
+    """Returns a dictionary with all the values of the house
+
+    Args:
+        htmlHouse (PageElement): The html Element of the current house
+    """    
     # Obtain the data from all the houses
     # TODO: Recámaras
     # TODO: Estacionamientos
@@ -40,12 +45,19 @@ def checkHouse(htmlHouse):
     title = htmlHouse.find('h2',{'class':'ListingCell-KeyInfo-title'}).text.strip()
     address = htmlHouse.find('span', {'class':'ListingCell-KeyInfo-address-text'}).text.strip()
     link = htmlHouse.find('a',{'class':'js-listing-link'})['href']
-    
+    price = htmlHouse.find('span', {'class':'PriceSection-FirstPrice'}).text.strip()
+    checkHouseDetail(link)
     print('='*40)
     print(title)
     print(address)
     print(link)
+    print(price)
     return {'title':title,'address':address}
+    
+def checkHouseDetail(link):
+    response = requests.get(link,headers=header)
+    if isResponseValid(response):
+        print("Scrapping: "+link)
     
     
 def checkMyIP():
