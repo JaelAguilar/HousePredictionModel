@@ -4,7 +4,7 @@ from webscrapperFunctions import checkHouse, checkLink, checkMyIP, isResponseVal
 
 # Request the URL       
 response = checkLink('https://www.lamudi.com.mx/nuevo-leon/casa/for-sale/')
-checkMyIP()
+checkMyIP() #Sanity Check
 
 if isResponseValid(response):
     #Creating the soup with an HTML Parser
