@@ -40,7 +40,6 @@ def checkHouse(htmlHouse):
     # Obtain the data from all the houses
     # TODO: Short description
     # TODO: Calificación del vecindario
-    # TODO: Amenidades
 
     # For every data, obtain the text and remove the surrounding whitespace
     title = htmlHouse.find('h2',{'class':'ListingCell-KeyInfo-title'}).text.strip()

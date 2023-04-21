@@ -2,18 +2,24 @@ import bs4
 
 from webscrapperFunctions import checkHouse, checkLink, checkMyIP, isResponseValid
 
-# Request the URL       
-response = checkLink('https://www.lamudi.com.mx/nuevo-leon/casa/for-sale/')
+originalLink = 'https://www.lamudi.com.mx/nuevo-leon/casa/for-sale/'
 checkMyIP() #Sanity Check
+totalPages = 2
 
-if isResponseValid(response):
-    #Creating the soup with an HTML Parser
-    soup = bs4.BeautifulSoup(response.text,'html.parser')
+for i in range(1,totalPages+1):
+    print('================================================ PAGE '+str(i)+' ================================================================')
+    newLink = originalLink +'?page='+str(i)
+    # Request the URL       
+    response = checkLink(newLink)
 
-    #Obtains the HTML objects of eacht on of the cards on the webpage
-    divHouses = soup.find_all('div',{'class':'row ListingCell-row ListingCell-agent-redesign'})
+    if isResponseValid(response):
+        #Creating the soup with an HTML Parser
+        soup = bs4.BeautifulSoup(response.text,'html.parser')
 
-    for house in divHouses:
-        checkHouse(house)
+        #Obtains the HTML objects of eacht on of the cards on the webpage
+        divHouses = soup.find_all('div',{'class':'row ListingCell-row ListingCell-agent-redesign'})
+
+        for house in divHouses:
+            checkHouse(house)
 
 
