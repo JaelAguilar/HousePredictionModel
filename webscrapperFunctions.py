@@ -49,7 +49,6 @@ def checkHouse(htmlHouse):
     print('='*40)
     print(title)
     print(address)
-    print(link)
     print(price)
     checkHouseLink(link)
     return {'title':title,'address':address}
@@ -66,7 +65,6 @@ def checkHouseLink(link):
     response = requests.get(link,headers=header)
     results = {}
     if isResponseValid(response):
-        print("Scrapping: "+link)
         soup = bs4.BeautifulSoup(response.text,'html.parser')
         checkHouseDetails(soup)
         
@@ -90,7 +88,6 @@ def checkHouseDetails(detailSoup):
         name=detailsNames[i].text.strip()
         value = detailsValues[i].text.strip()
         details[name]=value
-        print(name+": "+value)
     print(details)
     return details
         
