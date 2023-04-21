@@ -69,8 +69,10 @@ def checkHouseLink(link):
     if isResponseValid(response):
         print("Scrapping: "+link)
         soup = bs4.BeautifulSoup(response.text,'html.parser')
-        houseDetails = soup.find('div',{'class':'listing-section listing-details'})
-        checkHouseDetails(houseDetails)
+        checkHouseDetails(soup)
+        
+        houseAmenities = [i.text for i in soup.find_all('span',{'class':'listing-amenities-name'})]
+        print(houseAmenities)
     return results
     
 def checkHouseDetails(detailSoup):
@@ -93,7 +95,6 @@ def checkHouseDetails(detailSoup):
     print(details)
     return details
         
-    
 def checkMyIP():
     """Shows the current IP
     """    
