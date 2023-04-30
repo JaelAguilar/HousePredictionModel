@@ -62,7 +62,7 @@ def checkHouse(htmlHouse):
         results["price"]=price
         return results|otherData
     except Exception as ex:
-        print("There was an error retrieving the data: %err"%{ex})
+        print("There was an error retrieving the data: %s"%{ex})
         return None
     
     

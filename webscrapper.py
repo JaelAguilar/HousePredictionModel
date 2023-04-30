@@ -1,5 +1,6 @@
 import bs4
 import csv
+from tqdm import tqdm
 
 from webscrapperFunctions import checkHouse, checkLink, checkMyIP, isResponseValid
 
@@ -12,7 +13,7 @@ totalPages = 2
 #resultsFile.close()
 houses = []
 
-for i in range(1,totalPages+1):
+for i in tqdm(range(1,totalPages+1)):
     print('================================================ PAGE '+str(i)+' ================================================================')
     newLink = originalLink +'?page='+str(i)
     # Request the URL       
