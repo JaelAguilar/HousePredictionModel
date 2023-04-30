@@ -1,10 +1,16 @@
 import bs4
+import csv
 
 from webscrapperFunctions import checkHouse, checkLink, checkMyIP, isResponseValid
 
 originalLink = 'https://www.lamudi.com.mx/nuevo-leon/casa/for-sale/'
 checkMyIP() #Sanity Check
 totalPages = 2
+#resultsFile = open('dataTest.tsv','w',newline='')
+#resultsFileWriter = csv.DictWriter(resultsFile, delimiter='\t', lineterminator='\n\n')
+#resultsFile = list(resultsFileWriter)
+#resultsFile.close()
+houses = []
 
 for i in range(1,totalPages+1):
     print('================================================ PAGE '+str(i)+' ================================================================')
@@ -20,6 +26,10 @@ for i in range(1,totalPages+1):
         divHouses = soup.find_all('div',{'class':'row ListingCell-row ListingCell-agent-redesign'})
 
         for house in divHouses:
-            checkHouse(house)
+            houseData = checkHouse(house)
+            if houseData is not None:
+                houses.append(houseData)
+            
+print(houses, sep="\n\n")
 
 
