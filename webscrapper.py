@@ -33,12 +33,15 @@ print(*houses, sep='\n\n')
 headers = getHeaders()
 resultsFile = open('dataTest.tsv','w',newline='')
 resultsFileWriter = csv.DictWriter(resultsFile, delimiter='\t', lineterminator='\n\n',fieldnames=headers)
-resultsFile.close()
-
+resultsFileWriter.writeheader()
 print(headers)
-#for house in houses:
-#    row = []
-#    for header in headers:
+for house in houses:
+    for header in headers:
+        if header not in house:
+            house[header]=False
+    resultsFileWriter.writerow(house)
+resultsFile.close()
+        
         
     
     
