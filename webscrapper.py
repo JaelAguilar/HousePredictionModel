@@ -32,10 +32,10 @@ print(*houses, sep='\n\n')
 # Updating the csv
 headers = getHeaders()
 resultsFile = open('Data/dataTest.tsv','w',newline='')
-resultsFileWriter = csv.DictWriter(resultsFile, delimiter='\t', lineterminator='\n\n',fieldnames=["titulo","direccion","precio"]+list(headers))
+resultsFileWriter = csv.DictWriter(resultsFile, delimiter='\t', lineterminator='\n',fieldnames=["titulo","direccion","precio"]+list(headers))
 resultsFileWriter.writeheader()
 print(headers)
-for house in houses:
+for house in tqdm(houses):
     #for header in headers:
     #    if header not in house:
     #        house[header]=False
