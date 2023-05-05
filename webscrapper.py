@@ -2,15 +2,11 @@ import bs4
 import csv
 from tqdm import tqdm
 
-from webscrapperFunctions import checkHouse, checkLink, checkMyIP, isResponseValid
+from webscrapperFunctions import checkHouse, checkLink, checkMyIP, isResponseValid,getHeaders
 
 originalLink = 'https://www.lamudi.com.mx/nuevo-leon/casa/for-sale/'
 checkMyIP() #Sanity Check
-totalPages = 2
-#resultsFile = open('dataTest.tsv','w',newline='')
-#resultsFileWriter = csv.DictWriter(resultsFile, delimiter='\t', lineterminator='\n\n')
-#resultsFile = list(resultsFileWriter)
-#resultsFile.close()
+totalPages = 1
 houses = []
 
 for i in tqdm(range(1,totalPages+1)):
@@ -31,6 +27,19 @@ for i in tqdm(range(1,totalPages+1)):
             if houseData is not None:
                 houses.append(houseData)
             
-print(houses, sep="\n\n")
+print(*houses, sep='\n\n')
 
+# Updating the csv
+headers = getHeaders()
+resultsFile = open('dataTest.tsv','w',newline='')
+resultsFileWriter = csv.DictWriter(resultsFile, delimiter='\t', lineterminator='\n\n',fieldnames=headers)
+resultsFile.close()
+
+print(headers)
+#for house in houses:
+#    row = []
+#    for header in headers:
+        
+    
+    
 
