@@ -2,7 +2,7 @@ import bs4
 import requests
 # The response needs a header to pretend it is an user and not a script, else it returns 403 forbidden error
 header = {'User-Agent':'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36'}
-csvHeader = {"title","address","price"}
+csvHeader = {"titulo","direccion","precio"}
 
 def isResponseValid(response):
     """If the script can't get tthe response, shows the error in the terminal
@@ -45,21 +45,15 @@ def checkHouse(htmlHouse):
     # For every data, obtain the text and remove the surrounding whitespace
     results = {}
     
-    title = htmlHouse.find('h2',{'class':'ListingCell-KeyInfo-title'}).text.strip()
+    title = htmlHouse.find('h2',{'class':'ListingCell-KeyInfo-titulo'}).text.strip()
     print(title)
     try:
-        address = htmlHouse.find('span', {'class':'ListingCell-KeyInfo-address-text'}).text.strip()
         link = htmlHouse.find('a',{'class':'js-listing-link'})['href']
-        price = htmlHouse.find('span', {'class':'PriceSection-FirstPrice'}).text.strip()
-        #print('='*40)
-        
-        #print(address)
-        #print(price)
         otherData=checkHouseLink(link)
-        results["title"]=title
-        results["address"]=address
+        results["titulo"]=title
+        results["direccion"]=htmlHouse.find('span', {'class':'ListingCell-KeyInfo-direccion-text'}).text.strip()
         results |= otherData
-        results["price"]=price
+        results["precio"]=htmlHouse.find('span', {'class':'priceSection-Firstprice'}).text.strip()
         return results|otherData
     except Exception as ex:
         print("There was an error retrieving the data from %s: %s"%{title,ex})
@@ -115,7 +109,7 @@ def checkMyIP():
     """Shows the current IP
     """    
     ip = requests.get('https://api.ipify.org').content.decode('utf8')
-    print('My public IP address is: {}'.format(ip)) 
+    print('My public IP direccion is: {}'.format(ip)) 
        
 def getHeaders():
     return csvHeader
