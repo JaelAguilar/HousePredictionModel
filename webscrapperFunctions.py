@@ -2,7 +2,7 @@ import bs4
 import requests
 # The response needs a header to pretend it is an user and not a script, else it returns 403 forbidden error
 header = {'User-Agent':'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36'}
-csvHeader = {"titulo","direccion","precio"}
+csvHeader = set()
 
 def isResponseValid(response):
     """If the script can't get tthe response, shows the error in the terminal

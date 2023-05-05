@@ -32,7 +32,7 @@ print(*houses, sep='\n\n')
 # Updating the csv
 headers = getHeaders()
 resultsFile = open('dataTest.tsv','w',newline='')
-resultsFileWriter = csv.DictWriter(resultsFile, delimiter='\t', lineterminator='\n\n',fieldnames=headers)
+resultsFileWriter = csv.DictWriter(resultsFile, delimiter='\t', lineterminator='\n\n',fieldnames=["titulo","direccion","precio"]+list(headers))
 resultsFileWriter.writeheader()
 print(headers)
 for house in houses:
