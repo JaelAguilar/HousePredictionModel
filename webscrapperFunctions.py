@@ -45,15 +45,15 @@ def checkHouse(htmlHouse):
     # For every data, obtain the text and remove the surrounding whitespace
     results = {}
     
-    title = htmlHouse.find('h2',{'class':'ListingCell-KeyInfo-titulo'}).text.strip()
+    title = htmlHouse.find('h2',{'class':'ListingCell-KeyInfo-title'}).text.strip()
     print(title)
     try:
         link = htmlHouse.find('a',{'class':'js-listing-link'})['href']
         otherData=checkHouseLink(link)
         results["titulo"]=title
-        results["direccion"]=htmlHouse.find('span', {'class':'ListingCell-KeyInfo-direccion-text'}).text.strip()
+        results["direccion"]=htmlHouse.find('span', {'class':'ListingCell-KeyInfo-address-text'}).text.strip()
         results |= otherData
-        results["precio"]=htmlHouse.find('span', {'class':'priceSection-Firstprice'}).text.strip()
+        results["precio"]=htmlHouse.find('span', {'class':'PriceSection-FirstPrice'}).text.strip()
         return results|otherData
     except Exception as ex:
         print("There was an error retrieving the data from %s: %s"%{title,ex})
