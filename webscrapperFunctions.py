@@ -46,7 +46,7 @@ def checkHouse(htmlHouse):
     results = {}
     
     title = htmlHouse.find('h2',{'class':'ListingCell-KeyInfo-title'}).text.strip()
-    print(title)
+    #print(title)
     try:
         link = htmlHouse.find('a',{'class':'js-listing-link'})['href']
         otherData=checkHouseLink(link)
@@ -56,7 +56,7 @@ def checkHouse(htmlHouse):
         results["precio"]=htmlHouse.find('span', {'class':'PriceSection-FirstPrice'}).text.strip()
         return results|otherData
     except Exception as ex:
-        print("There was an error retrieving the data from %s: %s"%{title,ex})
+        #print("There was an error retrieving the data from {}: {}".format(title,ex))
         return None
     
     
@@ -109,7 +109,7 @@ def checkMyIP():
     """Shows the current IP
     """    
     ip = requests.get('https://api.ipify.org').content.decode('utf8')
-    print('My public IP direccion is: {}'.format(ip)) 
+    print('My public IP address is: {}'.format(ip)) 
        
 def getHeaders():
     return csvHeader
