@@ -4,10 +4,11 @@ import csv
 import requests
 from tqdm import tqdm
 
-from webscrapperFunctions import checkHouse, checkLink, checkMyIP, isResponseValid,getHeaders
+from webscrapperFunctions import checkHouse, checkLink, checkMyIP, isResponseValid #,getHeaders
 
 originalLink = 'https://www.lamudi.com.mx/nuevo-leon/casa/for-sale/'
 originalLinks = [
+    "https://www.lamudi.com.mx/nuevo-leon/casa/for-sale/",
     "https://www.lamudi.com.mx/nuevo-leon/casa/for-sale/?sorting=newest",
     "https://www.lamudi.com.mx/nuevo-leon/casa/for-sale/?sorting=price-high",
     "https://www.lamudi.com.mx/nuevo-leon/casa/for-sale/?sorting=price-low",
@@ -26,6 +27,7 @@ originalLinks = [
     "https://www.lamudi.com.mx/nuevo-leon/pesqueria/casa/for-sale/"]
 
 places = [
+    "Nuevo León",
     "Nuevo León nuevas",
     "Nuevo León caras",
     "Nuevo León baratas",
@@ -72,9 +74,10 @@ try:
                     if houseData is not None:
                         houses.append(houseData)
         #Update tsv
-        headers = getHeaders()
-        resultsFile = open('Data/dataUpdated.tsv','a',newline='')
-        resultsFileWriter = csv.DictWriter(resultsFile, delimiter='\t', lineterminator='\n',fieldnames=["titulo","direccion","precio"]+list(headers))
+        #headers = getHeaders()
+        resultsFile = open('Data/dataUpdatedCorrect-6may2023.tsv','a',newline='')
+        resultsFileWriter = csv.DictWriter(resultsFile, delimiter='\t', lineterminator='\n',fieldnames=["titulo","direccion","precio","Baños","Piso de duela","Armarios empotrados","Roof Garden","Totalmente cercado","Estacionamientos","Estacionamiento techado","Construidos (m²)","Nivel","Mantenimiento","Habitaciones (en total)","Superficie construida (m²)","Amueblado","Recámaras","Jardín","Internet de banda ancha disponible","Estacionamiento vigilado","Calefacción","Disponible desde","Balcón","Acceso a TV de paga","Patio","Garaje","Jacuzzi","Estudio","Piso de loseta","Sistema de alarma","Cancha de tenis","Cocina Equipada","Cuarto de servicio","Gimnasio","Estacionamiento abierto","Área de juegos infantiles",	"Construido (Año)","Aire acondicionado","Condiciones de Precio","Terraza",	"Área de entretenimiento al aire libre","Estacionamiento para Visitas",	"Intercomunicador","Chimenea","Terreno (m²)","Alberca"])
+
         #resultsFileWriter.writeheader()
         #print(headers)
         for house in tqdm(houses):
