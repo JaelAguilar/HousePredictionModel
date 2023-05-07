@@ -7,6 +7,15 @@ from datetime import datetime
 
 from webscrapperFunctions import checkHouse, checkLink, checkMyIP, isResponseValid #,getHeaders
 
+
+#Writing initial headers
+headers = ["titulo","direccion","precio","Baños","Piso de duela","Armarios empotrados","Roof Garden","Totalmente cercado","Estacionamientos","Estacionamiento techado","Construidos (m²)","Nivel","Mantenimiento","Habitaciones (en total)","Superficie construida (m²)","Amueblado","Recámaras","Jardín","Internet de banda ancha disponible","Estacionamiento vigilado","Calefacción","Disponible desde","Balcón","Acceso a TV de paga","Patio","Garaje","Jacuzzi","Estudio","Piso de loseta","Sistema de alarma","Cancha de tenis","Cocina Equipada","Cuarto de servicio","Gimnasio","Estacionamiento abierto","Área de juegos infantiles",	"Construido (Año)","Aire acondicionado","Condiciones de Precio","Terraza",	"Área de entretenimiento al aire libre","Estacionamiento para Visitas",	"Intercomunicador","Chimenea","Terreno (m²)","Alberca"]
+resultsFile = open('Data/dataUpdatedCorrect-6may2023.tsv','w',newline='')
+resultsFileWriter = csv.DictWriter(resultsFile, delimiter='\t', lineterminator='\n',fieldnames=headers)
+resultsFileWriter.writeheader()
+resultsFile.close()
+
+
 originalLink = 'https://www.lamudi.com.mx/nuevo-leon/casa/for-sale/'
 originalLinks = [
     "https://www.lamudi.com.mx/nuevo-leon/casa/for-sale/",
@@ -78,7 +87,7 @@ try:
         #Update tsv
         #headers = getHeaders()
         resultsFile = open('Data/dataUpdatedCorrect-6may2023.tsv','a',newline='')
-        resultsFileWriter = csv.DictWriter(resultsFile, delimiter='\t', lineterminator='\n',fieldnames=["titulo","direccion","precio","Baños","Piso de duela","Armarios empotrados","Roof Garden","Totalmente cercado","Estacionamientos","Estacionamiento techado","Construidos (m²)","Nivel","Mantenimiento","Habitaciones (en total)","Superficie construida (m²)","Amueblado","Recámaras","Jardín","Internet de banda ancha disponible","Estacionamiento vigilado","Calefacción","Disponible desde","Balcón","Acceso a TV de paga","Patio","Garaje","Jacuzzi","Estudio","Piso de loseta","Sistema de alarma","Cancha de tenis","Cocina Equipada","Cuarto de servicio","Gimnasio","Estacionamiento abierto","Área de juegos infantiles",	"Construido (Año)","Aire acondicionado","Condiciones de Precio","Terraza",	"Área de entretenimiento al aire libre","Estacionamiento para Visitas",	"Intercomunicador","Chimenea","Terreno (m²)","Alberca"])
+        resultsFileWriter = csv.DictWriter(resultsFile, delimiter='\t', lineterminator='\n',fieldnames=headers)
 
         #resultsFileWriter.writeheader()
         #print(headers)
