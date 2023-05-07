@@ -17,7 +17,6 @@ def isResponseValid(response):
         response.raise_for_status()
         return True
     except Exception as exc:
-        print("There was a problem: %s" % (exc))
         return False
     
 def checkLink(link):
