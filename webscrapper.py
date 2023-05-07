@@ -3,6 +3,7 @@ import bs4
 import csv
 import requests
 from tqdm import tqdm
+from datetime import datetime
 
 from webscrapperFunctions import checkHouse, checkLink, checkMyIP, isResponseValid #,getHeaders
 
@@ -58,6 +59,7 @@ try:
         totalPages = int(s.find('select',{'class':'js-pagination-dropdown'})['data-pagination-end']) #Obtain the actual total pages
         
         for i in (pbar2:=tqdm(range(1,totalPages+1))):
+            pbar2.set_description(datetime.now().strftime("%H:%M:%S"))
             cLoop=i
             newLink = originalLink +'?page='+str(i)
             # Request the URL       
