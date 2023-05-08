@@ -1,6 +1,6 @@
 "https://stackoverflow.com/questions/15741564/how-to-remove-duplicates-from-a-csv-file"
 '''from more_itertools import unique_everseen
-with open('Data/dataUpdated.tsv', 'r') as f, open('Data/newDataUpdated.tsv', 'w') as out_file:
+with open('Data/dataUpdatedCorrect-6may2023.tsv, 'r') as f, open('Data/newDataUpdated.tsv', 'w') as out_file:
     out_file.writelines(unique_everseen(f))'''
     
 "https://towardsdatascience.com/data-cleaning-how-to-handle-missing-values-in-pandas-cc8570c446ec"
@@ -9,7 +9,7 @@ with open('Data/dataUpdated.tsv', 'r') as f, open('Data/newDataUpdated.tsv', 'w'
 import pandas as pd
 import numpy as np
 
-df = pd.read_csv('Data/data.tsv', sep='\t')
+df = pd.read_csv('Data/newDataUpdated.tsv', sep='\t')
 #df.head(10)
 print(df.isnull().sum())
 
