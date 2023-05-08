@@ -2,7 +2,7 @@ import bs4
 import requests
 # The response needs a header to pretend it is an user and not a script, else it returns 403 forbidden error
 header = {'User-Agent':'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36'}
-csvHeader = set()
+#csvHeader = set()
 
 def isResponseValid(response):
     """If the script can't get tthe response, shows the error in the terminal
@@ -68,21 +68,22 @@ def checkHouseLink(link):
     Returns:
         dict: Dictionary with the data of every house
     """    
-    global csvHeader
+    #global csvHeader
     response = requests.get(link,headers=header)
     results = {}
     if isResponseValid(response):
         soup = bs4.BeautifulSoup(response.text,'html.parser')
         houseDetails = checkHouseDetails(soup)
         houseAmenities = [i.text for i in soup.find_all('span',{'class':'listing-amenities-name'})]
-        csvHeader|=set(houseAmenities)
+        #csvHeader|=set(houseAmenities)
         #print("House Details -> ",houseDetails)
-        csvHeader|=houseDetails.keys()
+        #csvHeader|=houseDetails.keys()
         #print("CSV HEADER -> ",csvHeader)
         #print(houseAmenities)
         results.update(houseDetails)
         results.update([(i,True) for i in houseAmenities])
         #print("House Extra Results -> ",results)
+        response.close()
     return results|houseDetails
     
 def checkHouseDetails(detailSoup):
@@ -110,5 +111,5 @@ def checkMyIP():
     ip = requests.get('https://api.ipify.org').content.decode('utf8')
     print('My public IP address is: {}'.format(ip)) 
        
-def getHeaders():
-    return csvHeader
+#def getHeaders():
+#    return csvHeader
