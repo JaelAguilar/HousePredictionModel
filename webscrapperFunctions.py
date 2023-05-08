@@ -83,6 +83,7 @@ def checkHouseLink(link):
         results.update(houseDetails)
         results.update([(i,True) for i in houseAmenities])
         #print("House Extra Results -> ",results)
+        response.close()
     return results|houseDetails
     
 def checkHouseDetails(detailSoup):
