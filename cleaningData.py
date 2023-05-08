@@ -14,19 +14,11 @@ df = pd.read_csv('Data/newDataUpdated.tsv', sep='\t')
 print(df.isnull().sum())
 
 # Baños
-missing_values=['True','contado','Negociable']
-df['Baños']=df['Baños'].replace(missing_values,np.NaN)
-
 df['Baños'] = df['Baños'].astype("float64")
 df['Baños'].fillna(round(df['Baños'].mean(),1),inplace=True)
 
-
 # Armarios empotrados
-missing_values = ['True']
-df['Armarios empotrados']=df['Armarios empotrados'].replace(missing_values,np.NaN)
-
-df['Armarios empotrados'] = df['Armarios empotrados'].astype("float64")
-df['Armarios empotrados'].fillna(round(df['Armarios empotrados'].mean(),1),inplace=True)
+df['Armarios empotrados'].fillna(False,inplace=True)
 
 print(df['Roof Garden'].unique())
 
