@@ -38,4 +38,4 @@ NaNtoFalse('Armarios empotrados','Roof Garden','Totalmente cercado','Estacionami
 
 deleteColumns('Nivel','Mantenimiento','Disponible desde','Construido (Año)','Condiciones de Precio','Superficie construida (m²)')
 
-
+df.to_csv('Data/newCleanData.tsv',sep='\t',index=False)
