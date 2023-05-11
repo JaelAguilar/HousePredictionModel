@@ -10,9 +10,6 @@ import pandas as pd
 import numpy as np
 
 df = pd.read_csv('Data/newDataUpdated.tsv', sep='\t')
-#df.head(10)
-print(df.isnull().sum())
-
 
 def NaNtoMean(*attributeList):
     global df
@@ -29,14 +26,16 @@ def deleteColumns(*attributeList):
     global df
     for attribute in attributeList:
         df = df.drop(attribute, axis=1)
+        
+#Special cases -> Superficie construida (m²), Amueblado
+df['Construidos (m²)'] = np.where(df['Construidos (m²)'].isna(),df['Superficie construida (m²)'],df['Construidos (m²)'])
+for old, new in [('Yes',True),('Sí',True),('No',False)]:
+    df['Amueblado'] = np.where(df['Amueblado']==old,new,df['Amueblado'])
 
-NaNtoMean('Baños','Estacionamientos','Construidos (m²)','Habitaciones (en total)','Recámaras','Terreno (m²)')
+NaNtoMean('Baños','Estacionamientos','Habitaciones (en total)','Recámaras','Terreno (m²)','Construidos (m²)')
 
-NaNtoFalse('Armarios empotrados','Roof Garden','Totalmente cercado','Estacionamiento techado','Alberca','Jardín','Internet de banda ancha disponible','Estacionamiento para Visitas','Estacionamiento vigilado','Calefacción','Balcón','Acceso a TV de paga','Patio','Garaje','Jacuzzi','Estudio','Piso de loseta','Sistema de alarma','Cancha de tenis','Cocina Equipada','Cuarto de servicio','Gimnasio','Estacionamiento abierto','Área de juegos infantiles','Aire acondicionado','Terraza','Área de entretenimiento al aire libre','Intercomunicador','Chimenea','Alberca','Piso de duela')
+NaNtoFalse('Armarios empotrados','Roof Garden','Totalmente cercado','Estacionamiento techado','Alberca','Jardín','Internet de banda ancha disponible','Estacionamiento para Visitas','Estacionamiento vigilado','Calefacción','Balcón','Acceso a TV de paga','Patio','Garaje','Jacuzzi','Estudio','Piso de loseta','Sistema de alarma','Cancha de tenis','Cocina Equipada','Cuarto de servicio','Gimnasio','Estacionamiento abierto','Área de juegos infantiles','Aire acondicionado','Terraza','Área de entretenimiento al aire libre','Intercomunicador','Chimenea','Alberca','Piso de duela','Amueblado')
 
-deleteColumns('Nivel','Mantenimiento','Disponible desde','Construido (Año)','Condiciones de Precio')
+deleteColumns('Nivel','Mantenimiento','Disponible desde','Construido (Año)','Condiciones de Precio','Superficie construida (m²)')
 
-# Special cases -> Amueblado, Superficie construida (m²)
-print('\n',df['Amueblado'].value_counts(dropna=False))
 
-print(df.isnull().sum())
