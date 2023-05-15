@@ -21,9 +21,6 @@ data = pd.read_csv("Data/newCleanData.tsv",sep='\t')
 print(data.head())
 print(data.describe())
 
-data['Recámaras'].value_counts().plot(kind='bar')
-plt.title('Número de habitaciones')
-plt.xlabel('Cuartos')
-plt.ylabel('Cantidad')
-sns.despine
+plt.scatter(data['Construidos (m²)'],data['precio'])
+plt.title("Precio vs Área construida")
 plt.show()
