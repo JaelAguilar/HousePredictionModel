@@ -34,6 +34,9 @@ df['Recámaras'] = np.where(df['Habitaciones (en total)'].isna()==False,df['Habi
 
 for old, new in [('Yes',True),('Sí',True),('No',False)]:
     df['Amueblado'] = np.where(df['Amueblado']==old,new,df['Amueblado'])
+    
+df.precio=df['precio'].replace('[\$,]', '', regex=True).astype(float)
+print(df['precio'])
 
 NaNtoMean('Baños','Estacionamientos','Recámaras','Terreno (m²)','Construidos (m²)')
 
