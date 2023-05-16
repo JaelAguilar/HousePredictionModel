@@ -75,8 +75,7 @@ print(type(newDF))
 
 plt.figure(0)
 plt.subplot(1,16,1)
-t=sns.boxplot(y=newDF['Terreno (m²)'], orient="h")
-t.set(xlabel=None)
+sns.boxplot(y=newDF['Terreno (m²)'], orient="h")
 plt.subplot(1,16,4)
 sns.boxplot(y=newDF['Construidos (m²)'], orient="h")
 plt.subplot(1,16,7)
@@ -127,4 +126,4 @@ sns.despine()
 
 plt.show()
 
-#df.to_csv('Data/newCleanData2.tsv',sep='\t',index=False)
+newDF.to_csv('Data/newCleanData2.tsv',sep='\t',index=False)
