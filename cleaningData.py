@@ -48,16 +48,25 @@ def deleteOutliers(df):
     return df[condition]
 
 
-#Special cases -> Superficie construida (m²), Amueblado, Habitaciones (en total)
+#Special cases -> Superficie construida (m²), Amueblado, Habitaciones (en total), Dirección, precio
+# Pass values from Superficie construida to Construidos
 df['Construidos (m²)'] = np.where(df['Construidos (m²)'].isna(),df['Superficie construida (m²)'],df['Construidos (m²)'])
 
+#Pass values from Habitaciones to Recámaras
 df['Recámaras'] = np.where(df['Habitaciones (en total)'].isna()==False,df['Habitaciones (en total)'],df['Recámaras'])
 
+#Turn values to true and false
 for old, new in [('Yes',True),('Sí',True),('No',False)]:
     df['Amueblado'] = np.where(df['Amueblado']==old,new,df['Amueblado'])
     
+# Convert prices from string to int
 df.precio=df['precio'].replace('[\$,]', '', regex=True).astype(float)
 print(df['precio'])
+
+# Convert dirección to colonia and ciudad
+cities = df['direccion'].str.split(', ', n=1)
+df[['Colonia','ciudad']] = pd.DataFrame(cities.tolist(),index=df.index)
+df['ciudad'] = np.where(df['ciudad'].isna(),df['Colonia'],df['ciudad'])
 
 NaNtoMean('Baños','Estacionamientos','Recámaras','Terreno (m²)','Construidos (m²)')
 
@@ -68,9 +77,6 @@ deleteColumns('Nivel','Mantenimiento','Disponible desde','Construido (Año)','Co
 
 
 newDF = deleteOutliers(df)
-#newDF = deleteOutliers(newDF)
-print("LONGITUD",len(newDF))
-print(type(newDF))
 
 
 plt.figure(0)
@@ -173,4 +179,4 @@ sns.despine()
 
 plt.show()
 
-newDF.to_csv('Data/newCleanData2.tsv',sep='\t',index=False)
+newDF.to_csv('Data/newCleanData3.tsv',sep='\t',index=False)
