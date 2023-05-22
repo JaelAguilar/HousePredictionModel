@@ -5,15 +5,16 @@ from sklearn.preprocessing import MinMaxScaler
 from tensorflow import keras
 from keras import layers
 from keras.layers import Embedding,Flatten,Dense
+from keras.optimizers import Adam
 
 
-data = pd.read_csv("Data/newCleanData2.tsv",sep='\t')
+data = pd.read_csv("Data/newCleanData3.tsv",sep='\t')
 print(data.head())
 print(data.describe())
 print("TIPO",type(data["Baños"]))
 
 # Split data between features and prices
-x = data.drop('precio',axis='columns').values
+x = data.drop('precio','titulo',axis='columns').values
 y = data['precio'].values
 
 # Split data between training and testing sets by random
@@ -50,3 +51,11 @@ model = Flatten()(city_embedded)
 model = Dense(64,activation='relu')(model)
 model = Dense(64,activation='relu')(model)
 model = Dense(1)(model)
+
+#============= COMPILE =============== #
+# TODO: Test other compilers
+model.compile(optimizer=Adam, loss='mean_squared_error')
+
+# ============= TRAIN =============== #
+
+model.fit(x_train,y_train,epochs=10,batch_size=32,verbose=1)
