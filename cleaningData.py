@@ -66,14 +66,62 @@ NaNtoFalse('Armarios empotrados','Roof Garden','Totalmente cercado','Estacionami
 
 deleteColumns('Nivel','Mantenimiento','Disponible desde','Construido (Año)','Condiciones de Precio','Superficie construida (m²)','Habitaciones (en total)')
 
-newDF = pd.DataFrame()
 
 newDF = deleteOutliers(df)
 #newDF = deleteOutliers(newDF)
 print("LONGITUD",len(newDF))
 print(type(newDF))
 
+
 plt.figure(0)
+plt.subplot(1,16,1)
+sns.boxplot(y=df['Terreno (m²)'], orient="h")
+plt.subplot(1,16,4)
+sns.boxplot(y=df['Construidos (m²)'], orient="h")
+plt.subplot(1,16,7)
+sns.boxplot(y=df['Recámaras'], orient="h")
+plt.subplot(1,16,10)
+sns.boxplot(y=df['Baños'], orient="h")
+plt.subplot(1,16,13)
+sns.boxplot(y=df['Estacionamientos'], orient="h")
+plt.subplot(1,16,16)
+sns.boxplot(y=df['precio'], orient="h")
+
+plt.figure(1)
+plt.subplot(231)
+plt.scatter(df['Construidos (m²)'],df['precio'])
+#plt.title("Precio vs Área construid a")
+plt.xlabel('Construidos (m2)')
+plt.ylabel('Precio')
+
+
+plt.subplot(232)
+plt.scatter(df['Terreno (m²)'],df['precio'])
+#plt.title("Precio vs Terreno")
+plt.xlabel('Terreno (m2)')
+plt.ylabel('Precio')
+
+
+plt.subplot(233)
+plt.scatter(df['Estacionamientos'],df['precio'])
+#plt.title("Precio vs Estacionamientos")
+plt.xlabel('Estacionamientos')
+plt.ylabel('Precio')
+
+plt.subplot(234)
+plt.scatter(df['Baños'],df['precio'])
+#plt.title("Precio vs Baños")
+plt.xlabel('Baños')
+plt.ylabel('Precio')
+
+plt.subplot(235)
+plt.scatter(df['Recámaras'],df['precio'])
+#plt.title("Precio vs Recámaras")
+plt.xlabel('Recámaras')
+plt.ylabel('Precio')
+
+
+plt.figure(2)
 plt.subplot(1,16,1)
 sns.boxplot(y=newDF['Terreno (m²)'], orient="h")
 plt.subplot(1,16,4)
@@ -87,7 +135,7 @@ sns.boxplot(y=newDF['Estacionamientos'], orient="h")
 plt.subplot(1,16,16)
 sns.boxplot(y=newDF['precio'], orient="h")
 
-plt.figure(1)
+plt.figure(3)
 plt.subplot(2,3,1)
 plt.scatter(newDF['Construidos (m²)'],newDF['precio'])
 #plt.title("Precio vs Área construid a")
@@ -122,7 +170,6 @@ plt.scatter(newDF['Recámaras'],newDF['precio'])
 plt.xlabel('Recámaras')
 plt.ylabel('Precio')
 sns.despine()
-
 
 plt.show()
 
