@@ -32,6 +32,7 @@ print(x_test)
 
 # Label Encoding for categorical variables https://towardsdatascience.com/deep-embeddings-for-categorical-variables-cat2vec-b05c8ab63ac0
 # https://www.kaggle.com/code/colinmorris/embedding-layers/notebook
+# Embed cathegorical data -> https://arxiv.org/pdf/1604.06737v1.pdf
 # TODO: Compare between only address vs ciudad and colonia vs only city
 #TODO: Changing embedding size
 # The rule of thumb for determining the embedding size is the cardinality size divided by 2, but no bigger than 50.
