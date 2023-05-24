@@ -177,6 +177,9 @@ plt.xlabel('Recámaras')
 plt.ylabel('Precio')
 sns.despine()
 
+plt.figure(4)
+plt.bar(newDF['ciudad'],newDF['precio'])
+
 plt.show()
 
 newDF.to_csv('Data/newCleanData3.tsv',sep='\t',index=False)
