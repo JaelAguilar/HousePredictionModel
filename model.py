@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+from sklearn.calibration import LabelEncoder
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
 from tensorflow import keras
@@ -14,19 +15,17 @@ print(data.describe())
 print("TIPO",type(data["Baños"]))
 
 # Split data between features and prices
-x = data.drop(['precio','titulo','direccion','ciudad','Colonia'],axis='columns').values
-y = data['precio'].values
+x = data.drop(['precio','titulo','direccion'],axis='columns')
+x_cat = LabelEncoder
+y = data['precio']
 
-# Split data between training and testing sets by random
-x_train,x_test,y_train,y_test = train_test_split(x,y,test_size=0.2,random_state=42)
 
-# Scale the features
+# Scale the numerical features
 # TODO: Compare betwwen MinMax and Standard scalers
 scaler = MinMaxScaler()
-x_train = scaler.fit_transform(x_train)
-x_test = scaler.fit_transform(x_test)
+numerical_x = scaler.fit_transform(x.drop(['ciudad','Colonia'],axis=1))
 
-print(x_test)
+print(x)
 
 # ============== MODEL ================ #
 
@@ -38,37 +37,45 @@ print(x_test)
 # The rule of thumb for determining the embedding size is the cardinality size divided by 2, but no bigger than 50.
 
 # ============= CATEGORIES =================== #
+categorical_x = pd.DataFrame()
 categories = ['ciudad','Colonia']
 embedding_layers = []
 input_layers = []
+lblEncoders = {}
 for category in categories:
-    cardinality = data[category]
+    # Label Encode all categories (giving them a value of 1 to n-1)
+    categorical_x = LabelEncoder().fit_transform(x[category])
+    
+    #Define cardinality and embeddin size for each Embedding layer
+    cardinality = data[category].nunique()
     embedding_size = min(50,cardinality//2)
     
     #Creating the Embedding and Flatten layers
     input_layer = layers.Input(shape=(1,))
-    embedding_layer = layers.Embedding(cardinality,embedding_size,name=category+" embedding")(input_layer)
+    embedding_layer = layers.Embedding(cardinality,embedding_size,name=category+'_embedding')(input_layer)
     embedding_layer = layers.Reshape(target_shape=(embedding_size,))(embedding_layer)
 
     #Adding all embedding and input layers
     embedding_layers.append(embedding_layers)
     input_layers.append(input_layer)
     
+# Concatenate numerical and embedded features
+
 # Code to use when adding more categorical data
 # concatenated = keras.layers.Concatenate()([city_embedded,suburb_embedded])
 
 # Using 2 hidden layers
 # TODO: Compare between using 1-3 hidden layers and changing units
-modelLayers = Flatten()(city_embedded)
-modelLayers = Dense(64,activation='relu')(modelLayers)
-modelLayers = Dense(64,activation='relu')(modelLayers)
-modelLayers = Dense(1)(modelLayers)
+
+model = keras.Model()
 
 #============= COMPILE =============== #
 # TODO: Test other compilers
 model.compile(optimizer=Adam, loss='mean_squared_error')
 
 # ============= TRAIN =============== #
+# Split data between training and testing sets by random
+x_train,x_test,y_train,y_test = train_test_split(x,y,test_size=0.2,random_state=42)
 
 model.fit(x_train,y_train,epochs=5,batch_size=32,verbose=1)
 
