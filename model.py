@@ -14,7 +14,7 @@ print(data.describe())
 print("TIPO",type(data["Baños"]))
 
 # Split data between features and prices
-x = data.drop('precio','titulo',axis='columns').values
+x = data.drop(['precio','titulo','direccion','ciudad','Colonia'],axis='columns').values
 y = data['precio'].values
 
 # Split data between training and testing sets by random
@@ -48,10 +48,10 @@ city_embedded = Embedding(cardinality,embedding_size_city,input_length=1, name='
 
 # Using 2 hidden layers
 # TODO: Compare between using 1-3 hidden layers and changing units
-model = Flatten()(city_embedded)
-model = Dense(64,activation='relu')(model)
-model = Dense(64,activation='relu')(model)
-model = Dense(1)(model)
+modelLayers = Flatten()(city_embedded)
+modelLayers = Dense(64,activation='relu')(modelLayers)
+modelLayers = Dense(64,activation='relu')(modelLayers)
+modelLayers = Dense(1)(modelLayers)
 
 #============= COMPILE =============== #
 # TODO: Test other compilers
@@ -59,4 +59,14 @@ model.compile(optimizer=Adam, loss='mean_squared_error')
 
 # ============= TRAIN =============== #
 
-model.fit(x_train,y_train,epochs=10,batch_size=32,verbose=1)
+model.fit(x_train,y_train,epochs=5,batch_size=32,verbose=1)
+
+# ============ EVALUATE ================= #
+loss = model.evaluate(x_test,y_test,verbose=0)
+
+# ============ PREDICTIONS =================== #
+predictions = model.predict(x_test)
+
+#Print 5 predictions
+for i in range(5):
+    print("Predicted price: {predictions[i][0]}, Actual price{y_test.iloc[i]}")
