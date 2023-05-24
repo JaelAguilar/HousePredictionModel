@@ -36,13 +36,24 @@ print(x_test)
 # TODO: Compare between only address vs ciudad and colonia vs only city
 #TODO: Changing embedding size
 # The rule of thumb for determining the embedding size is the cardinality size divided by 2, but no bigger than 50.
-cardinality = data['ciudad'].nunique()
-embedding_size_city = min(50,cardinality//2)
-city_input = keras.Input(shape=(1,),name="cities")
 
-#Creates an Embedding layer 
-city_embedded = Embedding(cardinality,embedding_size_city,input_length=1, name='city_embedding')(city_input)
+# ============= CATEGORIES =================== #
+categories = ['ciudad','Colonia']
+embedding_layers = []
+input_layers = []
+for category in categories:
+    cardinality = data[category]
+    embedding_size = min(50,cardinality//2)
+    
+    #Creating the Embedding and Flatten layers
+    input_layer = layers.Input(shape=(1,))
+    embedding_layer = layers.Embedding(cardinality,embedding_size,name=category+" embedding")(input_layer)
+    embedding_layer = layers.Reshape(target_shape=(embedding_size,))(embedding_layer)
 
+    #Adding all embedding and input layers
+    embedding_layers.append(embedding_layers)
+    input_layers.append(input_layer)
+    
 # Code to use when adding more categorical data
 # concatenated = keras.layers.Concatenate()([city_embedded,suburb_embedded])
 
