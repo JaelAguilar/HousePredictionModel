@@ -15,11 +15,11 @@ print(data.describe())
 print("TIPO",type(data["Baños"]))
 
 # Split data between features and prices
-x = data.drop(['precio','titulo','direccion'],axis='columns')
+x = data.drop(['precio','titulo','direccion','Colonia'],axis='columns')
 x_cat = LabelEncoder
 y = data['precio']
 
-categories = ['ciudad','Colonia']
+categories = ['ciudad']
 numerical_cols = len(data.columns)-5
 
 # Scale the numerical features
@@ -45,9 +45,11 @@ embedding_layers = []
 input_layers = [layers.Input(shape=(numerical_cols,))] #Added one initial that corresponds to ALL numerical values
 lblEncoders = {}
 
+# Label Encode all categories (giving them a value of 1 to n-1)
+categorical_x = x[categories].apply(LabelEncoder().fit_transform)
+#LabelEncoder().fit_transform(x[category])
 for category in categories:
-    # Label Encode all categories (giving them a value of 1 to n-1)
-    categorical_x = LabelEncoder().fit_transform(x[category])
+    
     
     #Define cardinality and embeddin size for each Embedding layer
     cardinality = data[category].nunique()
@@ -59,7 +61,7 @@ for category in categories:
     embedding_layer = layers.Reshape(target_shape=(embedding_size,))(embedding_layer)
 
     #Adding all embedding and input layers
-    embedding_layers.append(embedding_layers)
+    embedding_layers.append(embedding_layer)
     input_layers.append(input_layer)
     
 # Concatenate numerical and categorical input layers
@@ -83,7 +85,8 @@ model.compile(optimizer='adam', loss='mean_squared_error')
 
 # ============= TRAIN =============== #
 # Split data between training and testing sets by random
-x_train,x_test,y_train,y_test = train_test_split([*embedding_layers,numerical_x],y,test_size=0.2,random_state=42)
+#dummy_test = np.concatenate(*embedding_layers,numerical_x)
+x_train,x_test,y_train,y_test = train_test_split(*categorical_x.T.values+[],y,test_size=0.2,random_state=42)
 
 #Training
 model.fit(x_train,y_train,epochs=5,batch_size=32,verbose=1)
