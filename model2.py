@@ -9,3 +9,8 @@ cat_x = df[['ciudad','Colonia']]
 x=pd.concat([x,cat_x],axis=1)
 y = df['precio'].astype('float32')
 
+ee = EmbeddingEncoder(task="regression",verbose=1)
+ee.fit(X=cat_x,y=y)
+output = ee.transform(X=cat_x)
+
+print(type( output))
