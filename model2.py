@@ -55,6 +55,9 @@ print(f'Test loss: {loss}')
 # Make predictions
 predictions = model.predict(x_test)
 
+# Save the model
+keras.models.save_model(model, 'saved_model')
+
 # Print the first few predictions
 for i in range(5):
     print(f'Predicted price: {predictions[i][0]}, Actual price: {y_test.iloc[i]}')
