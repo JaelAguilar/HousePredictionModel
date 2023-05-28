@@ -36,8 +36,8 @@ x_train,x_test,y_train,y_test = train_test_split(x,y,test_size=0.2,random_state=
 
 #Define the model
 model = keras.Sequential([
-    layers.Dense(64,activation='relu'),
-    layers.Dense(64,activation='relu'),
+    layers.Dense(128,activation='relu'),
+    layers.Dense(128,activation='relu'),
     layers.Dense(1)
 ])
 
@@ -45,7 +45,7 @@ model = keras.Sequential([
 model.compile(optimizer='adam', loss='mse')
 
 #Train the model
-history = model.fit(x_train, y_train, epochs=200, batch_size=32, verbose=1)
+history = model.fit(x_train, y_train, epochs=600, batch_size=32, verbose=1)
 plot_model(model, to_file='model.png', show_shapes=True)
 
 # Evaluate the model
@@ -62,7 +62,6 @@ for i in range(5):
 #Show data
 plt.figure(0)
 plt.plot(history.history['loss'])
-plt.plot()
 plt.yscale('log')
 plt.title('Model Loss')
 plt.xlabel('Epoch')
