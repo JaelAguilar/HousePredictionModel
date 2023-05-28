@@ -17,7 +17,8 @@ cat_x = df[['ciudad','Colonia']] #Categorical columns
 y = df['precio'].astype('float32')
 
 #Create the embedded data
-ee = EmbeddingEncoder(task="regression",verbose=1)
+ee = EmbeddingEncoder(task="regression",verbose=1,mapping_path='Data/categories.json',pretrained=True)
+
 ee.fit(X=cat_x,y=y)
 output = ee.transform(X=cat_x)
 print(type( output))
