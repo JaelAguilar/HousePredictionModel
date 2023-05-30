@@ -17,11 +17,13 @@ cat_x = df[['ciudad','Colonia']] #Categorical columns
 y = df['precio'].astype('float32')
 
 #Create the embedded data
-ee = EmbeddingEncoder(task="regression",verbose=1,mapping_path='Data/categories.json',pretrained=True)
+ee = EmbeddingEncoder(task="regression",verbose=1,mapping_path='Data/categories.json',pretrained=True, keep_model=True)
 
 ee.fit(X=cat_x,y=y)
 output = ee.transform(X=cat_x)
 print(type( output))
+plot_model(ee._model, to_file='categoricalModel.png', show_shapes=True)
+ee.plot_embeddings(variable="ciudad", model="pca")
 
 #Concat original numerical data and embedded data
 x = pd.concat([x,output],axis=1)
@@ -70,7 +72,7 @@ plt.title('Model Loss')
 plt.xlabel('Epoch')
 plt.ylabel('Loss')
 
-plt.figure(1)
+plt.figure(2)
 plt.scatter(y_test, predictions)
 x = np.linspace(0,int(y_test.values.max()))
 y = x
