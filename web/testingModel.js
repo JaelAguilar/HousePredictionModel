@@ -2,7 +2,7 @@ var modelo = null;
 //Cargamos el modelo entrenado
 (async () => {
     console.log("Cargando el modelo...");
-    modelo = await tf.loadLayersModel("model.json");
+    modelo = await tf.loadGraphModel("tfjs_model/model.json");
     console.log("Modelo cargado!");
 })();
 
